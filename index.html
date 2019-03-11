@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Lista de Anamnese</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <script type="text/javascript" src="controle.js"></script>  
+</head>
+<!-- Jumbotron view -->
+<body>
+<div ng-app="AnamnApp" ng-controller="myControl">
+<div class="jumbotron jumbotron-fluid bg-dark text-secondary">
+  <div class="container text-center">
+    <h1 class="text-white">Anamneses</h1>
+    <h3 ng-show="swTable">Listar Anamneses</h3>
+    <h3 ng-show="!swTable">{{(swVis)?("Visualizar"):btnLabel}} Anamnese</h3>
+  </div>
+</div>
+<!-- main App -->
+<div class="container text-center"> 
+  <div class="row" ng-show="swTable">
+      <button type="button" class="btn btn-success btn-lg" ng-click="criar()">
+        <small>Adicionar Anamnese</small>
+      </button>
+  </div>
+
+  <div class="container text-center row">
+    <div class="row">
+       <div class="alert alert-danger alert-dismissible" ng-if="!checkCod() && resp.cod !== 0">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <strong>Error {{resp.cod}}: </strong>{{resp.msg}}
+       </div>
+       <div class="alert alert-success alert-dismissible" ng-if="checkCod()">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <strong>Sucesso!</strong> {{resp.msg}}
+       </div>
+    </div>
+  </div>
+
+  <div class="row text-center" ng-show="swTable">
+    <table class="table-striped table table-bordered my-table-border">
+        <thead class="table-dark">
+          <td width="140"><h5>Código</h5></td>
+          <td><h5>Anamnese</h5></td>
+          <td width="120"><h5>Resposta</h5></td>
+          <td width="280"><h5>Opções</h5></td>
+        </thead>
+        
+        <tr ng-repeat="x in resp.array">
+          <td> {{$index + 1}}</td>
+          <td> {{x.anamnese}} </td>
+          <td>
+            <div ng-if="x.resposta == 1">Sim</div>
+            <div ng-if="x.resposta != 1">Não</div>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-success" ng-click="atualizarAnamn(x)">
+              <i class="material-icons">edit</i><br>
+              Atualizar
+            </button>
+            <button class="btn btn-sm btn-outline-danger" ng-click="deleteAnamn(x)">
+              <i class="material-icons">delete</i><br>
+              &nbsp;&nbsp;Delete&nbsp;&nbsp;
+            </button>
+            <button class="btn btn-sm btn-outline-primary" ng-click="visualizar(x)">
+              <i class="material-icons">search</i><br>
+              Visualizar
+            </button><br>
+          </td>
+        </tr>
+    </table>
+  </div>
+
+  <div class="row text-center" ng-show="!swTable">
+    <form >
+      <table class="table text-left">
+        <tr>
+          <td><h4>Anamnese:</h4></td>
+          <td><input id="in_anamn" type="text" ng-model="myform.anamnese" size="50" minlength="5" maxlength="250" ng-readonly="swVis"></td>
+        </tr>
+        <tr>
+          <td><h4>Resposta:</h4></td>
+          <td>
+            <select ng-model="myform.resposta" class="select" ng-readonly="swVis">
+              <option value="1">Sim</option>
+              <option value="0">Não</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="text-center">
+          <td>
+            <button class="btn btn-lg btn-warning" ng-click="updatePage()">
+              Voltar
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-lg btn-success" ng-click="atualizar(); updatePage()" ng-show="!swVis">
+              {{btnLabel}}
+            </button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+</div>
+</body>
+</html>

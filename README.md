@@ -3,7 +3,7 @@ Site usando Angular, PHP e MySQL para cadastro de anamnese usando o padrão MVC 
 index.html(view), controle.js(controle) e a pasta api:
 
 ## arquivos api
-api/\n
+api/<br>
  |
  +-config/
  |    |

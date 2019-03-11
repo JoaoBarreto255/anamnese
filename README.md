@@ -1,8 +1,8 @@
 # Anamnese
 Site usando Angular, PHP e MySQL para cadastro de anamnese usando o padrão MVC associado a api rest.
-index.html(view), controle.js(controle) e a pasta api:
+index.html(view), controle.js(controle) e a pasta contendo a api (Modelo):
 
-## Disposição dos arquivos da api
+## Disposição dos arquivos da api ##
 api/<br>
  |<br>
  +-config/<br>
